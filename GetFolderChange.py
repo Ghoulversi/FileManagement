@@ -37,6 +37,8 @@ class MyHandler(FileSystemEventHandler):
             change_file_location(file_name, "png_format")
         elif file_format == '.jpg' or file_format == '.jpeg':
             change_file_location(file_name, "jpg_format")
+        else:
+            change_file_location(file_name, "Unknown")
         
 
 
