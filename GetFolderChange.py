@@ -3,9 +3,32 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-_path = input("Enter path to folder ('folder inclusive')")
+#_path = input("Enter path to folder ('folder inclusive')")
+_path = "/mnt/c/Users/Me/Downloads/"
+
+def get_is_downloading(file_path):
+    st = os.stat(file_path).st_size
+    current_size = st
+    
+    time.sleep(0.5)
+        
+    while (st != os.stat(file_path).st_size):
+        time.sleep(0.5)
+    
+    return True
+
 
 def change_file_location(file_name, folder_name):
+    
+    st = os.stat(file_name).st_size
+    current_size = st
+    time.sleep(0.5)
+        
+    while (st != os.stat(file_name).st_size):
+        time.sleep(0.5)
+    
+    print("go dalise")
+                
     file_name_list = file_name.split("/")
     _file_name = file_name_list[-1]
     
@@ -20,26 +43,31 @@ def change_file_location(file_name, folder_name):
     else:
         print('file doesn\'t exist')
         os.mkdir(_path + _folder_name)
-    
-    os.replace(current_file, destination_folder  + "/" + _file_name)
-    
+        
+    print("file name: " + _file_name + " current file: " + current_file)
+    try:
+        os.replace(current_file, destination_folder  + "/" + _file_name)
+    except:
+        print('Invalid file')
+   
 class MyHandler(FileSystemEventHandler):
     def on_modified(self, event):
         file_name = event.src_path
         file_format = file_name[-4:]
-        if file_format == '.txt':
-            change_file_location(file_name, "Text")
-        elif file_format == '.obj' or file_format == '.fbx':
-            change_file_location(file_name, "Models")
-        elif file_format == '.rar' or file_format == '.zip':
-            change_file_location(file_name, "Archive")
-        elif file_format == '.png':
-            change_file_location(file_name, "png_format")
-        elif file_format == '.jpg' or file_format == '.jpeg':
-            change_file_location(file_name, "jpg_format")
-        else:
-            change_file_location(file_name, "Unknown")
         
+        try:                               
+            if file_format == '.txt':
+                change_file_location(file_name, "Text")
+            elif file_format.upper() == '.OBJ' or file_format.upper() == '.FBX':           
+                change_file_location(file_name, "Models")
+            elif file_format == '.rar' or file_format == '.zip':
+                change_file_location(file_name, "Archive")
+            elif file_format == '.png':
+                change_file_location(file_name, "png_format")
+            elif file_format == '.jpg' or file_format == '.jpeg':
+                change_file_location(file_name, "jpg_format")
+        except:
+            print("something went wrong")
 
 
 if __name__ == "__main__":

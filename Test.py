@@ -1,6 +1,15 @@
-from datetime import datetime
+import os
+import time
 
-now = datetime.now()
+def getSize(file_path):
+    st = os.stat(file_path).st_size
+    current_size = st
+    
+    time.sleep(5)
+    
+    while (st != os.stat(file_path).st_size):
+        time.sleep(0.5)
+    
+    return True
 
-current_time = now.strftime('%Hh%Mm%Ss')
-print("Current time: " + current_time)
+print (getSize("/mnt/c/Users/Me/Downloads/"))
