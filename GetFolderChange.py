@@ -67,7 +67,7 @@ class MyHandler(FileSystemEventHandler):
             elif file_format == '.jpg' or file_format == '.jpeg':
                 change_file_location(file_name, "jpg_format")
         except:
-            print("something went wrong")
+            print("Invalid Format")
 
 
 if __name__ == "__main__":
